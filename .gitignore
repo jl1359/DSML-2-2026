@@ -15,12 +15,14 @@ __pycache__/
 # Datasets pesados (NUNCA subir datasets gigantes a GitHub)
 data/raw/*
 !data/raw/.gitkeep
+!data/raw/PhiUSIIL_Phishing_URL_Dataset.zip
 data/processed/*
 !data/processed/.gitkeep
-*.zip
 *.tar.gz
 *.rar
 *.csv
+*.zip
+!data/raw/PhiUSIIL_Phishing_URL_Dataset.zip
 
 # Modelos pesados guardados (usar Git LFS o regenerar localmente)
 saved_models/*
