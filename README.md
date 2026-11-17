@@ -7,24 +7,10 @@
 ---
 
 ## 📌 Descripción del Proyecto
-Este proyecto implementa una solución integral para mitigar el fraude cibernético y el robo de credenciales mediante el análisis avanzado de URLs. Se resuelve el problema combinando:
-1. **Modelos de Aprendizaje Profundo (Supervisados):** Redes neuronales convolucionales y recurrentes (CNN-1D, LSTM, GRU) para clasificar enlaces como legítimos o fraudulentos a partir de secuencias de caracteres.
-2. **Modelos de Aprendizaje No Supervisado:** Algoritmos de agrupamiento y detección de anomalías (DBSCAN, k-Means, Clustering Jerárquico) para aislar patrones atípicos y detectar amenazas de día cero (*Zero-Day*).
+Este proyecto desarrolla un prototipo de software de ciberseguridad para la detección y mitigación de enlaces fraudulentos (*Phishing*). Se implementa una solución híbrida compuesta por:
 
----
-
-## 👥 Asignación de Roles (Equipo de 8 Integrantes)
-
-| # | Integrante | Rol Principal | Componente Asignado |
-| :-: | :--- | :--- | :--- |
-| **1** | Integrante 1 | Ingeniería de Datos | Carga, limpieza, balanceo (SMOTE/submuestreo) y EDA del dataset PhiUSIIL. |
-| **2** | Integrante 2 | Deep Learning 1 | Red Convolucional 1D (**CNN-1D**) con capas de pooling y filtros locales. |
-| **3** | Integrante 3 | Deep Learning 2 | Red Recurrente **LSTM** con celdas de memoria y compuertas anti-desvanecimiento. |
-| **4** | Integrante 4 | Deep Learning 3 | Red Recurrente **GRU** optimizada para eficiencia en secuencias. |
-| **5** | Integrante 5 | No Supervisado 1 | **k-Means** (MacQueen 1967) y análisis de distancias intra/inter cluster. |
-| **6** | Integrante 6 | No Supervisado 2 | **DBSCAN** (Ester et al. 1996) para detección de densidad y ruido/outliers. |
-| **7** | Integrante 7 | No Supervisado 3 | **Clustering Jerárquico Aglomerativo** y análisis de dendrogramas. |
-| **8** | Integrante 8 | Software y Dashboard | Prototipo web interactivo en **Streamlit** y coordinación de informes. |
+1. **Modelos de Aprendizaje Profundo (Supervisados):** Redes neuronales (CNN-1D, LSTM, GRU) que analizan las URLs carácter por carácter para clasificar amenazas conocidas con alta precisión.
+2. **Modelos de Aprendizaje No Supervisado:** Algoritmos de agrupamiento y detección de anomalías (DBSCAN, k-Means, Clustering Jerárquico) para identificar patrones atípicos y ataques no catalogados (*Zero-Day*).
 
 ---
 
@@ -32,40 +18,32 @@ Este proyecto implementa una solución integral para mitigar el fraude cibernét
 
 ```text
 DSML-2-2026/
-├── .gitignore                    # Reglas para no subir datos pesados ni caches
+├── .gitignore                    # Reglas para no subir datos pesados ni temporales
 ├── README.md                     # Documentación principal del repositorio
 ├── requirements.txt              # Dependencias oficiales de Python
 │
-├── data/                         # Almacenamiento de datasets (ignorado por Git)
-│   ├── raw/                      # Dataset original (ej. PhiUSIIL CSV)
-│   ├── processed/                # Datasets limpios y particionados (train/test)
-│   └── samples/                  # Muestras ligeras para desarrollo rápido
+├── data/
+│   └── phiusiil/                 # Dataset oficial del proyecto
+│       ├── raw/                  # Dataset original (PhiUSIIL ZIP comprimido de 16 MB)
+│       ├── processed/            # Datos limpios y estandarizados (train.csv / test.csv)
+│       └── samples/              # Muestra ligera (30k filas) para desarrollo ágil
 │
-├── notebooks/                    # Cuadernos Jupyter por integrante/modelo
-│   ├── 01_eda_preprocessing.ipynb
-│   ├── 02_deep_learning_cnn.ipynb
-│   ├── 03_deep_learning_lstm.ipynb
-│   ├── 04_deep_learning_gru.ipynb
-│   ├── 05_unsupervised_kmeans.ipynb
-│   ├── 06_unsupervised_dbscan.ipynb
-│   └── 07_unsupervised_hierarchical.ipynb
+├── notebooks/                    # Cuadernos Jupyter por integrante y modelo
+│   ├── 01_preprocesamiento/      # Cuaderno de EDA, limpieza y Z-Score
+│   ├── 02_aprendizaje_profundo/  # Cuadernos de CNN-1D, LSTM y GRU
+│   └── 03_aprendizaje_no_supervisado/ # Cuadernos de DBSCAN, k-Means y Jerárquico
 │
-├── src/                          # Código modular y reutilizable
+├── src/                          # Código fuente modular en Python
 │   ├── __init__.py
-│   ├── data_loader.py            # Funciones para leer y procesar datos
-│   ├── feature_extraction.py     # Extracción de características léxicas
-│   ├── utils.py                  # Métricas (ROC, F1, Silueta) y gráficas
-│   └── models/
-│       ├── deep_learning/        # Scripts de CNN, LSTM y GRU
-│       └── unsupervised/         # Scripts de k-Means, DBSCAN y Jerárquico
+│   ├── data_loader.py            # Carga y descompresión automática de datos
+│   ├── preprocessing.py          # Pipeline de limpieza y estandarización Z-Score
+│   └── models/                   # Módulos de definición de los modelos
 │
-├── saved_models/                 # Modelos serializados (.keras, .pkl)
-├── app/                          # Prototipo en Streamlit
-│   └── main.py                   # Dashboard web de visualización y pruebas
-└── docs/                         # Informes académicos según el formato de la docente
-    ├── pre_informe_1/
-    ├── pre_informe_2/
-    └── informe_final/
+├── saved_models/                 # Modelos entrenados y serializados (.keras, .pkl)
+│   └── phiusiil/
+│
+└── app/                          # Prototipo interactivo en Streamlit
+    └── main.py                   # Dashboard web de visualización y pruebas en vivo
 ```
 
 ---
@@ -74,27 +52,43 @@ DSML-2-2026/
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/DSML-2-2026.git
+git clone https://github.com/jl1359/DSML-2-2026.git
 cd DSML-2-2026
 ```
 
 ### 2. Crear y activar el entorno virtual
 
-**Con `uv` (Recomendado - Ultrarrápido):**
+**Opción con `uv` (Recomendada - Ultrarrápida):**
 ```bash
 uv venv --python 3.11
 .venv\Scripts\activate
 uv pip install -r requirements.txt
 ```
 
-**Con `venv` estándar de Python:**
+**Opción con `python` estándar:**
 ```bash
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Ejecutar la aplicación interactiva (Streamlit)
+---
+
+## 📊 ¿Cómo cargar los datos en tu código o notebook?
+
+No necesitas descomprimir archivos manualmente. Desde cualquier notebook o script de Python:
+
+```python
+from src.data_loader import load_phiusiil_processed
+
+# Carga automática de train (80% = 188k filas) y test (20% = 47k filas) listos y estandarizados
+train_df, test_df = load_phiusiil_processed()
+```
+
+---
+
+## 💻 Ejecutar la Aplicación Interactiva (Streamlit)
+
 ```bash
 streamlit run app/main.py
 ```
