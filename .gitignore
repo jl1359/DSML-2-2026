@@ -1,0 +1,43 @@
+# Entornos virtuales de Python
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / cachés
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# Datasets pesados (NUNCA subir datasets gigantes a GitHub)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+*.zip
+*.tar.gz
+*.rar
+*.csv
+
+# Modelos pesados guardados (usar Git LFS o regenerar localmente)
+saved_models/*
+!saved_models/.gitkeep
+*.h5
+*.keras
+*.pkl
+*.joblib
+
+# Logs y métricas temporales
+logs/
+*.log
+
+# IDEs y editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
