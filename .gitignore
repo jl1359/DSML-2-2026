@@ -1,0 +1,68 @@
+# Entornos virtuales de Python
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / caches
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# Archivos de datos pesados generales
+*.tar.gz
+*.rar
+*.csv
+*.zip
+
+# --- CONFIGURACION DE DATASET OFICIAL (PhiUSIIL) ---
+data/phiusiil/raw/*
+!data/phiusiil/raw/.gitkeep
+!data/phiusiil/raw/PhiUSIIL_Phishing_URL_Dataset.zip
+data/phiusiil/processed/*
+!data/phiusiil/processed/.gitkeep
+data/phiusiil/samples/*
+!data/phiusiil/samples/.gitkeep
+
+# Excepcion para el zip comprimido de PhiUSIIL
+!data/phiusiil/raw/PhiUSIIL_Phishing_URL_Dataset.zip
+
+# --- ARCHIVOS PRIVADOS Y SEGUNDO DATASET (MALICIOUS PHISH) ---
+# Totalmente excluidos del repositorio del grupo
+data/malicious_phish/
+*malicious*
+
+# --- MODELOS ENTRENADOS ---
+# Se conservan los .gitkeep para mantener la estructura visible en GitHub
+models/**/guardados/*
+!models/**/guardados/.gitkeep
+models/**/resultados/*
+!models/**/resultados/.gitkeep
+*.h5
+*.keras
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.onnx
+
+# Mantener .gitkeep en todas las subcarpetas de notebooks
+!notebooks/**/.gitkeep
+
+# Logs y metricas temporales
+logs/
+*.log
+
+# Informes y documentacion (se redactan externamente en Google Docs)
+docs/
+
+# IDEs y editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
