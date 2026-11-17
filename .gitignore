@@ -12,17 +12,28 @@ __pycache__/
 *$py.class
 .ipynb_checkpoints/
 
-# Datasets pesados (NUNCA subir datasets gigantes a GitHub)
-data/raw/*
-!data/raw/.gitkeep
-!data/raw/PhiUSIIL_Phishing_URL_Dataset.zip
-data/processed/*
-!data/processed/.gitkeep
+# Archivos de datos pesados generales
 *.tar.gz
 *.rar
 *.csv
 *.zip
-!data/raw/PhiUSIIL_Phishing_URL_Dataset.zip
+
+# --- CONFIGURACIÓN DE DATASETS ---
+# 1. Dataset Malicious Phish (USO PRIVADO LOCAL - Totalmente ignorado)
+data/malicious_phish/*
+!data/malicious_phish/.gitkeep
+
+# 2. Dataset PhiUSIIL (COMPARTIDO CON EL EQUIPO)
+data/phiusiil/raw/*
+!data/phiusiil/raw/.gitkeep
+!data/phiusiil/raw/PhiUSIIL_Phishing_URL_Dataset.zip
+data/phiusiil/processed/*
+!data/phiusiil/processed/.gitkeep
+data/phiusiil/samples/*
+!data/phiusiil/samples/.gitkeep
+
+# Excepción para el zip comprimido de PhiUSIIL
+!data/phiusiil/raw/PhiUSIIL_Phishing_URL_Dataset.zip
 
 # Modelos pesados guardados (usar Git LFS o regenerar localmente)
 saved_models/*
