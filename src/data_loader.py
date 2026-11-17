@@ -72,6 +72,25 @@ def load_phiusiil_sample():
         return create_and_save_sample()
     return pd.read_csv(sample_path)
 
+def load_phiusiil_processed():
+    """
+    Carga los conjuntos procesados train.csv y test.csv desde data/phiusiil/processed/.
+    Si aún no existen, ejecuta automáticamente el pipeline de preprocesamiento.
+    """
+    train_path = os.path.join(PROCESSED_DIR, "train.csv")
+    test_path = os.path.join(PROCESSED_DIR, "test.csv")
+
+    if not os.path.exists(train_path) or not os.path.exists(test_path):
+        print("⚙️ Datos procesados no encontrados. Ejecutando pipeline de preprocesamiento...")
+        from src.preprocessing import run_pipeline
+        run_pipeline()
+
+    print(f"📂 Cargando train.csv y test.csv desde {PROCESSED_DIR}...")
+    train_df = pd.read_csv(train_path)
+    test_df = pd.read_csv(test_path)
+    print(f"✅ Datos listos: Train ({len(train_df):,} filas), Test ({len(test_df):,} filas).")
+    return train_df, test_df
+
 def load_malicious_phish_raw(nrows=None):
     """
     Carga el dataset de Malicious Phish desde data/malicious_phish/raw/ (si existe localmente).

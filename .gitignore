@@ -47,6 +47,9 @@ saved_models/*
 logs/
 *.log
 
+# Informes y documentación (se redactan externamente en Google Docs)
+docs/
+
 # IDEs y editores
 .vscode/
 .idea/
