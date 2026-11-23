@@ -29,7 +29,6 @@ from src.data_loader import load_phiusiil_processed
 # Configuración de página de Streamlit
 st.set_page_config(
     page_title="Sistema de Ciberseguridad - Detección de Phishing",
-    page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -164,7 +163,7 @@ def main():
         simbolos_val = float(muestra_actual.get("CharContinuationRate", 0.0))
         https_val = float(muestra_actual.get("IsHTTPS", 0.0))
         
-        st.write(f"**Etiqueta Real (Ground Truth):** {'🔴 SITIO DE PHISHING (1)' if etiqueta_real == 1 else '🟢 SITIO LEGÍTIMO (0)'}")
+        st.write(f"**Etiqueta Real (Ground Truth):** {'[ALERTA] SITIO DE PHISHING (Clase 1)' if etiqueta_real == 1 else '[SEGURO] SITIO LEGITIMO (Clase 0)'}")
 
     else:
         st.subheader("1. Parámetros Estructurales de la URL (Valores Estandarizados Z-Score)")
