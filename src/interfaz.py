@@ -69,9 +69,12 @@ def cargar_modelos():
     path_qtable = os.path.join(BASE_DIR, "models", "reinforcement_learning", "guardados", "q_table_phishing.pkl")
     q_table = None
     if os.path.exists(path_qtable):
-        with open(path_qtable, "rb") as f:
-            q_table = pickle.load(f)
-            
+        try:
+            q_table = joblib.load(path_qtable)
+        except Exception:
+            with open(path_qtable, "rb") as f:
+                q_table = pickle.load(f)
+
     return modelo_mlp, modelo_cnn, modelo_kmeans, modelo_pca, q_table
 
 
@@ -135,7 +138,7 @@ def main():
         "• Refuerzo: Q-Learning MDP (Allow/Block/Sandbox)"
     )
 
-    features_cols = [c for c in df_muestra.columns if c not in ["label", "url", "FILENAME"]]
+    features_cols = [c for c in df_muestra.select_dtypes(include=[np.number]).columns if c != "label"]
     
     if modo_evaluacion == "Muestras Reales del Conjunto de Prueba":
         st.subheader("1. Selección de Muestra de Tráfico Web Real")
@@ -212,11 +215,12 @@ def main():
             st.warning("Modelo Deep Learning no cargado.")
 
     # B. Agrupamiento K-Means y PCA
+    vector_x_f64 = vector_x.astype(np.float64)
     with col_km:
         st.markdown("#### B. Aprendizaje No Supervisado")
         if modelo_kmeans is not None and modelo_pca is not None:
-            cluster = int(modelo_kmeans.predict(vector_x)[0])
-            coord_pca = modelo_pca.transform(vector_x)[0]
+            cluster = int(modelo_kmeans.predict(vector_x_f64)[0])
+            coord_pca = modelo_pca.transform(vector_x_f64)[0]
             
             cluster_nombre = "Cluster 0 (Perfil Malicioso)" if cluster == 0 else "Cluster 1 (Perfil Legítimo)"
             st.metric(label="Cluster Asignado por K-Means", value=f"Cluster {cluster}")
@@ -229,7 +233,10 @@ def main():
         st.markdown("#### C. Mitigación Dinámica (Q-Learning)")
         if q_table is not None:
             estado_discreto = discretizar_estado_rl(longitud_val, simbolos_val, https_val)
-            q_valores = q_table.get(estado_discreto, [0.0, 0.0, 0.0])
+            if isinstance(q_table, dict):
+                q_valores = q_table.get(estado_discreto, [0.0, 0.0, 0.0])
+            else:
+                q_valores = q_table[estado_discreto]
             accion_optima = int(np.argmax(q_valores))
             
             nombres_acciones = ["PERMITIR (Allow)", "BLOQUEAR (Block)", "SANDBOX (Inspección Segura)"]
@@ -254,7 +261,7 @@ def main():
         fig, ax = plt.subplots(figsize=(8, 4))
         
         # Submuestra de fondo
-        X_sub = df_muestra[features_cols].values[:300]
+        X_sub = df_muestra[features_cols].values[:300].astype(np.float64)
         pca_sub = modelo_pca.transform(X_sub)
         y_sub = df_muestra["label"].values[:300]
         
@@ -262,7 +269,7 @@ def main():
         ax.scatter(pca_sub[y_sub == 1, 0], pca_sub[y_sub == 1, 1], c="#DC2626", alpha=0.3, label="Phishing (Fondo)")
         
         # Punto actual
-        coord_actual = modelo_pca.transform(vector_x)[0]
+        coord_actual = modelo_pca.transform(vector_x_f64)[0]
         ax.scatter(coord_actual[0], coord_actual[1], c="#F59E0B", s=250, marker="*", edgecolors="black", linewidths=1.5, label="URL Actual Inspeccionada", zorder=5)
         
         ax.set_title("Proyección en Componentes Principales (PC1 vs PC2)")
