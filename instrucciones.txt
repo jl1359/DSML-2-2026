@@ -1,0 +1,119 @@
+================================================================================
+GUIA RAPIDA DE INSTALACION Y EJECUCION DEL PROYECTO
+Materia: Machine Learning y Ciencia de los Datos (2/2026)
+Docente: Lic. Patricia Rodriguez Bilbao
+Universidad Mayor de San Simon - Cochabamba, Bolivia
+Area Asignada: Seguridad (Ciberseguridad - Deteccion de Phishing)
+================================================================================
+
+--------------------------------------------------------------------------------
+1. REQUISITOS PREVIOS
+--------------------------------------------------------------------------------
+- Python 3.11 instalado en el sistema.
+- Git instalado (opcional, para clonar el repositorio).
+- Sistema Operativo: Windows / Linux / macOS.
+
+--------------------------------------------------------------------------------
+2. CREACION Y ACTIVACION DEL ENTORNO VIRTUAL
+--------------------------------------------------------------------------------
+
+Abrir una terminal en la carpeta principal del proyecto (DSML-2-2026):
+
+Opcion A: Con uv (Recomendado, mas rapido)
+------------------------------------------
+  uv venv --python 3.11
+  .venv\Scripts\activate           (En Windows PowerShell o CMD)
+  source .venv/bin/activate        (En Linux o macOS)
+  uv pip install -r requirements.txt
+
+Opcion B: Con Python estandar (venv)
+------------------------------------
+  python -m venv .venv
+  .venv\Scripts\activate           (En Windows PowerShell o CMD)
+  source .venv/bin/activate        (En Linux o macOS)
+  pip install -r requirements.txt
+
+--------------------------------------------------------------------------------
+3. EJECUCION DE MODELOS DE APRENDIZAJE PROFUNDO (DEEP LEARNING)
+--------------------------------------------------------------------------------
+Con el entorno virtual activado (.venv), ejecutar desde la raiz del proyecto:
+
+1. Perceptron Multicapa (MLP):
+   python models/deep_learning/entrenamiento_mlp.py
+   -> Entrena la red densa (17,217 parametros), valida con EarlyStopping y
+      guarda curvas de perdida/accuracy, matriz de confusion y curva ROC.
+
+2. Red Neuronal Convolucional 1D (CNN-1D):
+   python models/deep_learning/entrenamiento_cnn.py
+   -> Entrena la red con filtros convolucionales 1D (10,753 parametros) y
+      genera sus metricas y graficos de evaluacion.
+
+3. Red Neuronal Recurrente con Memoria (LSTM):
+   python models/deep_learning/entrenamiento_lstm.py
+   -> Entrena la celda recurrente LSTM y genera sus graficos y metricas.
+
+4. Comparacion Consolidada de Deep Learning:
+   python models/deep_learning/comparar_modelos_dl.py
+   -> Lee las metricas individuales, crea la tabla comparativa oficial en CSV
+      y genera el grafico de barras comparativo (figuras/09_comparativa_modelos_dl.png).
+
+--------------------------------------------------------------------------------
+4. EJECUCION DE APRENDIZAJE NO SUPERVISADO (CLUSTERING Y ANOMALIAS)
+--------------------------------------------------------------------------------
+
+1. Agrupamiento Particional con K-Means:
+   python models/unsupervised/clustering_kmeans.py
+   -> Evalua k=2 a k=8 con metodo del codo, coeficiente de silueta y pureza.
+
+2. Deteccion de Anomalias y Ataques Zero-Day con DBSCAN:
+   python models/unsupervised/clustering_dbscan.py
+   -> Agrupa por densidad espacial y aisla trafico web anomalo (-1).
+
+3. Reduccion de Dimensionalidad con PCA:
+   python models/unsupervised/analisis_pca.py
+   -> Proyecta las 50 variables a 2 dimensiones conservando la varianza.
+
+4. Evaluacion Global de Clustering:
+   python models/unsupervised/evaluar_clustering.py
+   -> Genera la tabla comparativa de metricas de agrupamiento (ARI, Silueta).
+
+--------------------------------------------------------------------------------
+5. EJECUCION DE APRENDIZAJE POR REFUERZO (Q-LEARNING)
+--------------------------------------------------------------------------------
+
+1. Agente Q-Learning para Mitigacion Dinamica:
+   python models/reinforcement_learning/agente_qlearning.py
+   -> Entrena el agente con politicas de recompensa (Permitir, Bloquear, Sandbox).
+
+--------------------------------------------------------------------------------
+6. EJECUCION DE CUADERNOS INTERACTIVOS (JUPYTER NOTEBOOKS)
+--------------------------------------------------------------------------------
+
+Para abrir y explorar los cuadernos ejecutados con graficos incrustados:
+
+  jupyter lab
+  (o bien: jupyter notebook)
+
+Navegar a la carpeta notebooks/ y seleccionar el cuaderno de interes:
+- notebooks/01_preprocesamiento/01_eda_limpieza_phiusiil.ipynb
+- notebooks/02_deep_learning/01_redes_neuronales_deep_learning.ipynb
+- notebooks/03_no_supervisado/01_clustering_anomalias.ipynb
+- notebooks/04_refuerzo/01_aprendizaje_por_refuerzo_qlearning.ipynb
+
+--------------------------------------------------------------------------------
+7. EJECUCION DE LA INTERFAZ INTERACTIVA DE USUARIO (STREAMLIT)
+--------------------------------------------------------------------------------
+
+Para iniciar la aplicacion web interactiva de clasificacion en tiempo real:
+
+  streamlit run src/interfaz.py
+
+La aplicacion se abrira automaticamente en el navegador web:
+  http://localhost:8501
+
+Permite ingresar una direccion URL sospechosa para clasificarla de inmediato
+con los modelos neuronales y visualizar su ubicacion en el plano de clusters.
+
+================================================================================
+FIN DE LAS INSTRUCCIONES
+================================================================================
