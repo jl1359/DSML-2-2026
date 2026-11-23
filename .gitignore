@@ -20,15 +20,9 @@ __pycache__/
 
 # --- CONFIGURACION DE DATASET OFICIAL (PhiUSIIL) ---
 data/phiusiil/raw/*
-!data/phiusiil/raw/.gitkeep
 !data/phiusiil/raw/PhiUSIIL_Phishing_URL_Dataset.zip
 data/phiusiil/processed/*
-!data/phiusiil/processed/.gitkeep
 data/phiusiil/samples/*
-!data/phiusiil/samples/.gitkeep
-
-# Excepcion para el zip comprimido de PhiUSIIL
-!data/phiusiil/raw/PhiUSIIL_Phishing_URL_Dataset.zip
 
 # --- ARCHIVOS PRIVADOS Y SEGUNDO DATASET (MALICIOUS PHISH) ---
 # Totalmente excluidos del repositorio del grupo
@@ -36,11 +30,8 @@ data/malicious_phish/
 *malicious*
 
 # --- MODELOS ENTRENADOS ---
-# Se conservan los .gitkeep para mantener la estructura visible en GitHub
 models/**/guardados/*
-!models/**/guardados/.gitkeep
 models/**/resultados/*
-!models/**/resultados/.gitkeep
 *.h5
 *.keras
 *.pkl
@@ -48,9 +39,12 @@ models/**/resultados/*
 *.pt
 *.pth
 *.onnx
+*.pkl
+*.joblib
+*.pt
+*.pth
+*.onnx
 
-# Mantener .gitkeep en todas las subcarpetas de notebooks
-!notebooks/**/.gitkeep
 
 # Logs y metricas temporales
 logs/
